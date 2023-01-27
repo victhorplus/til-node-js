@@ -25,11 +25,12 @@ class Database {
     }
 
     async addHero(hero){
-        if(hero.id <= 2) return true;
+        let aux = await this.get(hero.id);
+        if(aux.length > 0) return true;
 
         const list = await this.get();
         const id = Date.now();
-        hero = { ...hero, id };
+        hero = { id, ...hero };
         list.push(hero);
 
         try{
@@ -39,6 +40,36 @@ class Database {
             console.error(err)
             return false;
         }
+    }
+
+    async deleteHero(id){
+        if(!id) {
+            return await this.writeDatabase([]);
+        }
+        
+        let list = await this.get();
+        let indice = list.findIndex((hero) => hero.id == id);
+        
+        if(indice < 0){
+            throw new Error("O heroi informado não existe")
+        }
+        list.splice(indice, 1)
+        await this.writeDatabase(list);
+        return true;
+    }
+
+    async updateHero(oldHero, newHero){
+        let list = await this.readDatabase();
+        let indice = list.findIndex(hero => hero.id == oldHero.id );
+        if(indice < 0) throw new Error("O heroi informado não existe");
+        
+        list[indice] = {
+            ...oldHero,
+            ...newHero
+        }
+        await this.writeDatabase(list);
+
+        return list[indice];
     }
 }
 
