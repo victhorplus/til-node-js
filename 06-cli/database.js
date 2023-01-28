@@ -25,12 +25,12 @@ class Database {
     }
 
     async addHero(hero){
+        const list = await this.get();
+        const id = hero.id || Date.now();
+        hero = { ...hero, id };
+        
         let aux = await this.get(hero.id);
         if(aux.length > 0) return true;
-
-        const list = await this.get();
-        const id = Date.now();
-        hero = { id, ...hero };
         list.push(hero);
 
         try{

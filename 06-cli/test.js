@@ -6,6 +6,11 @@ const DEFAULT_ITEM_CADASTRAR = {
     poder: 'Speed',
     id: 1
 };
+const DEFAULT_ITEM_ALTERAR = {
+    id:2,
+    nome:"batman",
+    poder:"Dinheiro"
+};
 
 describe("database test", function(){
     this.beforeEach(async () => {
@@ -51,10 +56,10 @@ describe("database test", function(){
 
     it("Deve atualizar um herói usando arquivos", async () => {
         const expected = {
-            ...DEFAULT_ITEM_CADASTRAR,
-            nome: "Flash Reverso"
+            ...DEFAULT_ITEM_ALTERAR,
+            nome: "Batman que ri"
         };
-        const result = await database.updateHero(DEFAULT_ITEM_CADASTRAR, expected);
+        const result = await database.updateHero(DEFAULT_ITEM_ALTERAR, expected);
 
         deepEqual(result, expected)
     })
