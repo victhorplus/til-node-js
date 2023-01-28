@@ -21,7 +21,6 @@ async function main(){
                 console.log("Heroi cadastradado com sucesso"):
                 console.error("Herói não foi cadastrado")
         }
-        if(commander)
     }catch(err){
         console.log("Erro comander", err)
     }
